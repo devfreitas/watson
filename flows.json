@@ -1,0 +1,187 @@
+[
+    {
+        "id": "5072d92cdbff5b2e",
+        "type": "tab",
+        "label": "Fluxo 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "f8a094112d690251",
+        "type": "function",
+        "z": "5072d92cdbff5b2e",
+        "name": "Save context",
+        "func": "context.flow.chatId = msg.payload.chatId;\ncontext.flow.type = msg.payload.type;\nmsg.payload = msg.payload.content;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 320,
+        "wires": [
+            [
+                "ed558dabd0b90d98"
+            ]
+        ]
+    },
+    {
+        "id": "a6ee8c10903c7a7a",
+        "type": "function",
+        "z": "5072d92cdbff5b2e",
+        "name": "Restore context",
+        "func": "msg.payload.chatId = context.flow.chatId;\nmsg.payload.type = context.flow.type;\nmsg.payload.content = msg.payload.output.generic[0].text;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 820,
+        "y": 280,
+        "wires": [
+            [
+                "d692a6b7c8d7ec99"
+            ]
+        ]
+    },
+    {
+        "id": "c23f4bb68bbc99dd",
+        "type": "function",
+        "z": "5072d92cdbff5b2e",
+        "name": "Not authorized user",
+        "func": "msg.payload.content = \"You're not authorized user\";\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 420,
+        "wires": [
+            [
+                "d692a6b7c8d7ec99"
+            ]
+        ]
+    },
+    {
+        "id": "ed558dabd0b90d98",
+        "type": "watson-assistant-v2",
+        "z": "5072d92cdbff5b2e",
+        "name": "Something",
+        "service-endpoint": "https://api.us-south.assistant.watson.cloud.ibm.com/instances/ada0a098-4eaf-4aff-9c0b-5902cbf66061",
+        "assistant_id": "0aef6cdb-2350-4c6e-977f-9da43c8f319f",
+        "debug": false,
+        "restart": false,
+        "return_context": true,
+        "alternate_intents": false,
+        "multisession": false,
+        "timeout": "",
+        "optout-learning": false,
+        "persist-session-id": false,
+        "x": 570,
+        "y": 280,
+        "wires": [
+            [
+                "a6ee8c10903c7a7a",
+                "ba751eebc4754016"
+            ]
+        ]
+    },
+    {
+        "id": "b138ed7e81957c1b",
+        "type": "telegram receiver",
+        "z": "5072d92cdbff5b2e",
+        "name": "",
+        "bot": "15f92a8235375ec0",
+        "saveDataDir": "",
+        "filterCommands": false,
+        "x": 120,
+        "y": 320,
+        "wires": [
+            [
+                "f8a094112d690251",
+                "e56532c899ea7225"
+            ],
+            [
+                "c23f4bb68bbc99dd"
+            ]
+        ]
+    },
+    {
+        "id": "d692a6b7c8d7ec99",
+        "type": "telegram sender",
+        "z": "5072d92cdbff5b2e",
+        "name": "",
+        "bot": "15f92a8235375ec0",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 830,
+        "y": 420,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e56532c899ea7225",
+        "type": "debug",
+        "z": "5072d92cdbff5b2e",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 320,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "ba751eebc4754016",
+        "type": "debug",
+        "z": "5072d92cdbff5b2e",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 740,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "15f92a8235375ec0",
+        "type": "telegram bot",
+        "botname": "zakkbot",
+        "usernames": "",
+        "chatids": "",
+        "baseapiurl": "",
+        "testenvironment": false,
+        "updatemode": "polling",
+        "pollinterval": "300",
+        "usesocks": false,
+        "sockshost": "",
+        "socksprotocol": "socks5",
+        "socksport": "6667",
+        "socksusername": "anonymous",
+        "sockspassword": "",
+        "bothost": "",
+        "botpath": "",
+        "localbothost": "",
+        "localbotport": "8443",
+        "publicbotport": "8443",
+        "privatekey": "",
+        "certificate": "",
+        "useselfsignedcertificate": false,
+        "sslterminated": false,
+        "verboselogging": false
+    }
+]
