@@ -1,6 +1,6 @@
 [
     {
-        "id": "5072d92cdbff5b2e",
+        "id": "e72df55cdb7bfdd9",
         "type": "tab",
         "label": "Fluxo 1",
         "disabled": false,
@@ -8,10 +8,68 @@
         "env": []
     },
     {
-        "id": "f8a094112d690251",
+        "id": "bd58e0b6b3e9c96b",
+        "type": "telegram command",
+        "z": "e72df55cdb7bfdd9",
+        "name": "Comando /start",
+        "command": "/start",
+        "description": "",
+        "registercommand": false,
+        "language": "",
+        "bot": "15f92a8235375ec0",
+        "strict": false,
+        "hasresponse": true,
+        "useregex": false,
+        "removeregexcommand": false,
+        "outputs": 2,
+        "x": 320,
+        "y": 380,
+        "wires": [
+            [
+                "f7c5e9d88d4a0bfc"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f7c5e9d88d4a0bfc",
         "type": "function",
-        "z": "5072d92cdbff5b2e",
-        "name": "Save context",
+        "z": "e72df55cdb7bfdd9",
+        "name": "Menu com botões",
+        "func": "// Gera botões inline personalizados para Telegram\nmsg.payload = {\n    chatId: msg.payload.chatId,\n    type: 'message',\n    content: 'Olá! Como posso te ajudar?',\n    options: {\n        reply_markup: {\n            inline_keyboard: [\n                [\n                    { text: 'Problema com produto', callback_data: 'problema_produto' },\n                    { text: 'Problema com a entrega', callback_data: 'problema_entrega' }\n                ],\n                [\n                    { text: 'Outro tipo de problema', callback_data: 'outro_problema' }\n                ],\n                [\n                    { text: 'Avaliar', callback_data: 'avaliar' },\n                    { text: 'Finalizar', callback_data: 'finalizar' }\n                ]\n            ]\n        }\n    }\n};\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 550,
+        "y": 380,
+        "wires": [
+            [
+                "1889e487.3fdc7f"
+            ]
+        ]
+    },
+    {
+        "id": "1889e487.3fdc7f",
+        "type": "telegram sender",
+        "z": "e72df55cdb7bfdd9",
+        "name": "Enviar mensagem",
+        "bot": "15f92a8235375ec0",
+        "haserroroutput": false,
+        "outputs": 1,
+        "x": 790,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d75d19ace2c2012b",
+        "type": "function",
+        "z": "e72df55cdb7bfdd9",
+        "name": "Function (save context)",
         "func": "context.flow.chatId = msg.payload.chatId;\ncontext.flow.type = msg.payload.type;\nmsg.payload = msg.payload.content;\nreturn msg;",
         "outputs": 1,
         "timeout": "",
@@ -19,61 +77,21 @@
         "initialize": "",
         "finalize": "",
         "libs": [],
-        "x": 370,
+        "x": 350,
         "y": 320,
         "wires": [
             [
-                "ed558dabd0b90d98"
+                "4e31122cc27a9ea9"
             ]
         ]
     },
     {
-        "id": "a6ee8c10903c7a7a",
-        "type": "function",
-        "z": "5072d92cdbff5b2e",
-        "name": "Restore context",
-        "func": "msg.payload.chatId = context.flow.chatId;\nmsg.payload.type = context.flow.type;\nmsg.payload.content = msg.payload.output.generic[0].text;\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 820,
-        "y": 280,
-        "wires": [
-            [
-                "d692a6b7c8d7ec99"
-            ]
-        ]
-    },
-    {
-        "id": "c23f4bb68bbc99dd",
-        "type": "function",
-        "z": "5072d92cdbff5b2e",
-        "name": "Not authorized user",
-        "func": "msg.payload.content = \"You're not authorized user\";\nreturn msg;",
-        "outputs": 1,
-        "timeout": "",
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 470,
-        "y": 420,
-        "wires": [
-            [
-                "d692a6b7c8d7ec99"
-            ]
-        ]
-    },
-    {
-        "id": "ed558dabd0b90d98",
+        "id": "4e31122cc27a9ea9",
         "type": "watson-assistant-v2",
-        "z": "5072d92cdbff5b2e",
+        "z": "e72df55cdb7bfdd9",
         "name": "Something",
         "service-endpoint": "https://api.us-south.assistant.watson.cloud.ibm.com/instances/ada0a098-4eaf-4aff-9c0b-5902cbf66061",
-        "assistant_id": "0aef6cdb-2350-4c6e-977f-9da43c8f319f",
+        "assistant_id": "beb01d12-4d28-4a4b-a50f-41c7cbb817cd",
         "debug": false,
         "restart": false,
         "return_context": true,
@@ -83,52 +101,50 @@
         "optout-learning": false,
         "persist-session-id": false,
         "x": 570,
-        "y": 280,
+        "y": 320,
         "wires": [
             [
-                "a6ee8c10903c7a7a",
-                "ba751eebc4754016"
+                "6fed8bbb0e030b26",
+                "3351db75a896a912"
             ]
         ]
     },
     {
-        "id": "b138ed7e81957c1b",
+        "id": "b24b8c3f2a822c26",
         "type": "telegram receiver",
-        "z": "5072d92cdbff5b2e",
+        "z": "e72df55cdb7bfdd9",
         "name": "",
         "bot": "15f92a8235375ec0",
         "saveDataDir": "",
         "filterCommands": false,
-        "x": 120,
+        "x": 130,
         "y": 320,
         "wires": [
             [
-                "f8a094112d690251",
-                "e56532c899ea7225"
+                "d75d19ace2c2012b",
+                "b63594add12d4662"
             ],
-            [
-                "c23f4bb68bbc99dd"
-            ]
+            []
         ]
     },
     {
-        "id": "d692a6b7c8d7ec99",
+        "id": "8b748b6d8c780837",
         "type": "telegram sender",
-        "z": "5072d92cdbff5b2e",
+        "z": "e72df55cdb7bfdd9",
         "name": "",
         "bot": "15f92a8235375ec0",
         "haserroroutput": false,
         "outputs": 1,
-        "x": 830,
-        "y": 420,
+        "x": 1050,
+        "y": 320,
         "wires": [
             []
         ]
     },
     {
-        "id": "e56532c899ea7225",
+        "id": "b63594add12d4662",
         "type": "debug",
-        "z": "5072d92cdbff5b2e",
+        "z": "e72df55cdb7bfdd9",
         "name": "debug 1",
         "active": true,
         "tosidebar": true,
@@ -137,25 +153,46 @@
         "complete": "false",
         "statusVal": "",
         "statusType": "auto",
-        "x": 320,
-        "y": 140,
+        "x": 140,
+        "y": 280,
         "wires": []
     },
     {
-        "id": "ba751eebc4754016",
+        "id": "6fed8bbb0e030b26",
         "type": "debug",
-        "z": "5072d92cdbff5b2e",
+        "z": "e72df55cdb7bfdd9",
         "name": "debug 2",
         "active": true,
         "tosidebar": true,
         "console": false,
         "tostatus": false,
-        "complete": "false",
+        "complete": "payload",
+        "targetType": "msg",
         "statusVal": "",
         "statusType": "auto",
-        "x": 740,
-        "y": 160,
+        "x": 580,
+        "y": 280,
         "wires": []
+    },
+    {
+        "id": "3351db75a896a912",
+        "type": "function",
+        "z": "e72df55cdb7bfdd9",
+        "name": "Watson para Telegram - Botões",
+        "func": "// Verifica se há resposta do tipo 'option'\nlet resposta = msg.payload.output.generic.find(r => r.response_type === \"option\");\nlet chatId = msg.originalMessage?.chat?.id || msg.payload.chatId || null;\n\nif (!chatId) {\n    node.warn(\"chatId não encontrado\");\n    return null;\n}\n\nif (resposta) {\n    let texto = resposta.title || \"Escolha uma opção:\";\n    let botoes = resposta.options.map(opt => {\n        return [{\n            text: opt.label,\n            callback_data: opt.value.input.text\n        }]; // Coloca cada botão em uma linha\n    });\n\n    msg.payload = {\n        chatId: chatId,\n        type: \"message\",\n        content: texto,\n        options: {\n            reply_markup: {\n                inline_keyboard: botoes\n            }\n        }\n    };\n    return msg;\n} else {\n    // Caso não haja opções, envia texto comum\n    let respostasTexto = msg.payload.output.generic\n        .filter(r => r.response_type === \"text\")\n        .map(r => r.text)\n        .join(\"\\n\");\n\n    msg.payload = {\n        chatId: chatId,\n        type: \"message\",\n        content: respostasTexto\n    };\n    return msg;\n}",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 790,
+        "y": 320,
+        "wires": [
+            [
+                "8b748b6d8c780837"
+            ]
+        ]
     },
     {
         "id": "15f92a8235375ec0",
