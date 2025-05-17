@@ -1,0 +1,604 @@
+{
+  "intents": [
+    {
+      "intent": "avaliar",
+      "examples": [
+        {
+          "text": "."
+        },
+        {
+          "text": ".."
+        },
+        {
+          "text": "..."
+        },
+        {
+          "text": "Avaliação"
+        },
+        {
+          "text": "Avaliar"
+        },
+        {
+          "text": "Dar nota"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "entrega",
+      "examples": [
+        {
+          "text": "Ainda não chegou"
+        },
+        {
+          "text": "Período para a entrega ?"
+        },
+        {
+          "text": "Prazo"
+        },
+        {
+          "text": "Problema com a entrega"
+        },
+        {
+          "text": "Qual o prazo de entrega"
+        },
+        {
+          "text": "Quantos dias úteis para a entrega ?"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "iniciando",
+      "examples": [
+        {
+          "text": "começar"
+        },
+        {
+          "text": "iniciando"
+        },
+        {
+          "text": "iniciar"
+        },
+        {
+          "text": "/start"
+        },
+        {
+          "text": "start"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "menu",
+      "examples": [
+        {
+          "text": "Gostaria de tirar uma dúvida"
+        },
+        {
+          "text": "Necessito de ajuda"
+        },
+        {
+          "text": "Preciso de ajuda"
+        },
+        {
+          "text": "Preciso resolver um problema"
+        },
+        {
+          "text": "Quero resolver um problema"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "outros",
+      "examples": [
+        {
+          "text": "Diferente"
+        },
+        {
+          "text": "Distinto"
+        },
+        {
+          "text": "Outro"
+        },
+        {
+          "text": "Outro problema"
+        },
+        {
+          "text": "Preciso de ajuda com outra coisa"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "pedido",
+      "examples": [
+        {
+          "text": "Estou com problema com meu produto"
+        },
+        {
+          "text": "Meu pedido"
+        },
+        {
+          "text": "Meu produto"
+        },
+        {
+          "text": "Pedido"
+        },
+        {
+          "text": "Produto"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "saida",
+      "examples": [
+        {
+          "text": "Agradeço"
+        },
+        {
+          "text": "Finalizar"
+        },
+        {
+          "text": "Obrigada"
+        },
+        {
+          "text": "Obrigado"
+        },
+        {
+          "text": "Tamo junto"
+        },
+        {
+          "text": "Valeu"
+        }
+      ],
+      "description": ""
+    }
+  ],
+  "entities": [
+    {
+      "entity": "avaliar",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Avaliação",
+          "synonyms": []
+        },
+        {
+          "type": "patterns",
+          "value": "avaliar",
+          "patterns": [
+            "^[0-5]$"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "entrega",
+      "values": [
+        {
+          "type": "patterns",
+          "value": "data",
+          "patterns": [
+            "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "outro",
+      "values": [
+        {
+          "type": "patterns",
+          "value": "outro",
+          "patterns": [
+            "^.+?[.?!]$"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "produto",
+      "values": [
+        {
+          "type": "patterns",
+          "value": "problema",
+          "patterns": [
+            "^.+?[.?!]$"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Bem-vindo",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Olá. Como posso te ajudar?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "Bem-vindo"
+    },
+    {
+      "type": "standard",
+      "title": "Em outros casos",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Eu não entendi. Você pode tentar reformular a frase."
+              },
+              {
+                "text": "Você pode reformular sua afirmação? Eu não estou entendendo."
+              },
+              {
+                "text": "Eu não entendi o sentido."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "Em outros casos",
+      "previous_sibling": "node_7_1747423065089",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Qual foi a data da compra ? (DD/MM/AAAA)"
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "slot_8_1747423381637",
+      "event_name": "focus",
+      "dialog_node": "handler_1_1747423381644",
+      "previous_sibling": "handler_4_1747423381644"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Qual nota você dá ao atendimento ? (0 - 5)"
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "slot_1_1747423578314",
+      "event_name": "focus",
+      "dialog_node": "handler_1_1747423578322",
+      "previous_sibling": "handler_5_1747423578322"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Qual problema seu produto apresenta ? (Termine a frase utilizando \"!, ?, .\")"
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "slot_1_1747423159793",
+      "event_name": "focus",
+      "dialog_node": "handler_2_1747423159798",
+      "previous_sibling": "handler_9_1747423159798"
+    },
+    {
+      "type": "event_handler",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Descreva qual foi o seu problema ? (Termine a frase utilizando \"!, ?, .\")"
+              }
+            ],
+            "response_type": "text"
+          }
+        ]
+      },
+      "parent": "slot_4_1747423459294",
+      "event_name": "focus",
+      "dialog_node": "handler_3_1747423459301",
+      "previous_sibling": "handler_9_1747423459301"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_8_1747423381637",
+      "context": {
+        "entrega_data": "@entrega.literal"
+      },
+      "conditions": "@entrega.literal",
+      "event_name": "input",
+      "dialog_node": "handler_4_1747423381644"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_1_1747423578314",
+      "context": {
+        "avaliar_avaliar": "@avaliar.literal"
+      },
+      "conditions": "@avaliar.literal",
+      "event_name": "input",
+      "dialog_node": "handler_5_1747423578322"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_1_1747423159793",
+      "context": {
+        "produto_problema": "@produto.literal"
+      },
+      "conditions": "@produto.literal",
+      "event_name": "input",
+      "dialog_node": "handler_9_1747423159798"
+    },
+    {
+      "type": "event_handler",
+      "output": {},
+      "parent": "slot_4_1747423459294",
+      "context": {
+        "outro_outro": "@outro.literal"
+      },
+      "conditions": "@outro.literal",
+      "event_name": "input",
+      "dialog_node": "handler_9_1747423459301"
+    },
+    {
+      "type": "standard",
+      "title": "Menu de opções",
+      "output": {
+        "generic": [
+          {
+            "title": "Escolha uma das opções abaixo:",
+            "options": [
+              {
+                "label": "Problema com produto",
+                "value": {
+                  "input": {
+                    "text": "Problema com produto"
+                  }
+                }
+              },
+              {
+                "label": "Problema com a entrega",
+                "value": {
+                  "input": {
+                    "text": "Problema com a entrega"
+                  }
+                }
+              },
+              {
+                "label": "Outro tipo de problema",
+                "value": {
+                  "input": {
+                    "text": "Outro tipo de problema"
+                  }
+                }
+              },
+              {
+                "label": "Avaliar ",
+                "value": {
+                  "input": {
+                    "text": "Avaliar "
+                  }
+                }
+              },
+              {
+                "label": "Finalizar",
+                "value": {
+                  "input": {
+                    "text": "Finalizar"
+                  }
+                }
+              }
+            ],
+            "description": "",
+            "response_type": "option"
+          }
+        ]
+      },
+      "conditions": "#menu",
+      "dialog_node": "node_1_1747422781760",
+      "previous_sibling": "Bem-vindo"
+    },
+    {
+      "type": "frame",
+      "title": "Pedido - (Menu)",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Apenas para confirmar seu problema:"
+              },
+              {
+                "text": "$produto_problema"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
+      },
+      "conditions": "#pedido",
+      "dialog_node": "node_1_1747423119338",
+      "previous_sibling": "node_1_1747422781760"
+    },
+    {
+      "type": "frame",
+      "title": "Outros - (Menu)",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Apenas para confirmar seu problema:"
+              },
+              {
+                "text": "$outro_outro"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
+      },
+      "conditions": "#outros",
+      "dialog_node": "node_1_1747423445672",
+      "previous_sibling": "node_3_1747423363291"
+    },
+    {
+      "type": "frame",
+      "title": "Entrega - (Menu)",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Apenas para confirmar o dia da compra:"
+              },
+              {
+                "text": "$entrega_data"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
+      },
+      "conditions": "#entrega",
+      "dialog_node": "node_3_1747423363291",
+      "previous_sibling": "node_1_1747423119338"
+    },
+    {
+      "type": "standard",
+      "title": "Saída",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Fico feliz em ajudar! Estou a disposição para ajudar 😊"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#saida",
+      "dialog_node": "node_7_1747423065089",
+      "previous_sibling": "node_9_1747423506008"
+    },
+    {
+      "type": "frame",
+      "title": "Avaliações",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Sua nota é: \n$avaliar_avaliar ⭐"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "#avaliar",
+      "dialog_node": "node_9_1747423506008",
+      "previous_sibling": "node_1_1747423445672"
+    },
+    {
+      "type": "slot",
+      "parent": "node_1_1747423119338",
+      "variable": "$produto_problema",
+      "dialog_node": "slot_1_1747423159793"
+    },
+    {
+      "type": "slot",
+      "parent": "node_9_1747423506008",
+      "variable": "$avaliar_avaliar",
+      "dialog_node": "slot_1_1747423578314"
+    },
+    {
+      "type": "slot",
+      "parent": "node_1_1747423445672",
+      "variable": "$outro_outro",
+      "dialog_node": "slot_4_1747423459294"
+    },
+    {
+      "type": "slot",
+      "parent": "node_3_1747423363291",
+      "variable": "$entrega_data",
+      "dialog_node": "slot_8_1747423381637"
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "disambiguation": {
+      "prompt": "Você quis dizer:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "Nenhuma das anteriores",
+      "use_connect_to_support_prompt": "Connect to support",
+      "single_answer_clarification_prompt": "Something else"
+    },
+    "human_agent_assist": {
+      "prompt": "Você quis dizer:"
+    }
+  },
+  "learning_opt_out": false,
+  "language": "pt-br",
+  "description": "",
+  "name": "Zakk-dialog"
+}
