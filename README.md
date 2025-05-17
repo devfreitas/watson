@@ -62,5 +62,9 @@ Retorna a resposta ao usuário no Telegram. Recebe mensagens já prontas para en
    
 ## Flow
 
-Como o nome já sugere, é o arquivo onde está armazenado nosso flow!
+Arquivo .json do fluxo de Node-RED.
+
+## Zakk-Dialog
+
+Arquivo .json dialog skill.
 
